@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract ExampleToken is ERC20 {
+    constructor() ERC20("ExampleToken", "EXT") {
+        _mint(address(this), 1000 * 10 ** decimals());
+    }
+
+    function subscribe () public payable {
+            
+        uint subscriptionAmount = msg.value * 10 ** decimals() / 1 ether;
+            
+        _transfer(address (this), msg.sender, subscriptionAmount);
+
+        require(subscriptionAmount <= balanceOf(address (this)));
+    }
+}
